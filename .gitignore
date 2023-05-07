@@ -40,3 +40,22 @@ Thumbs.db
 
 # Next.js
 .next
+
+# Expo
+node_modules/
+.expo/
+.yarn/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+cache/
+
+
+apps/howis-expo-e2e/artifacts
+apps/howisthe-expo-e2e/artifacts

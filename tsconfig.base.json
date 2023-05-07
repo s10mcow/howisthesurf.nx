@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@howis/components/*": ["./apps/howisthesurf/components/*"],
+      "@howis/modules/*": ["./apps/howisthesurf/modules/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
