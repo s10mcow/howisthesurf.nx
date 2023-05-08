@@ -1,0 +1,31 @@
+{
+  "name": "howis-expo",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-native": "*",
+    "@testing-library/react-native": "*",
+    "react-native": "0.71.7",
+    "expo": "~48.0.15",
+    "expo-av": "*",
+    "react-native-svg": "*",
+    "react-native-web": "*",
+    "expo-splash-screen": "~0.18.2",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "@nx/expo": "*",
+    "@expo/metro-config": "*",
+    "@babel/core": "*",
+    "react-native-auth0": "*",
+    "@react-native-picker/picker": "*"
+  },
+  "scripts": {
+    "postinstall": "rm -r node_modules && cd ../../ && yarn install && npx nx sync-deps howis-expo && npx nx ensure-symlink howis-expo",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  }
+}

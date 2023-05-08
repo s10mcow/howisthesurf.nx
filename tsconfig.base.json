@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@howis/components/*": ["./apps/howisthesurf/components/*"],
+      "@howis/data-hooks": ["libs/data-hooks/src/index.ts"],
       "@howis/modules/*": ["./apps/howisthesurf/modules/*"]
     }
   },
