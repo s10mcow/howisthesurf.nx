@@ -9,7 +9,6 @@ import {
   SafeAreaView,
   Platform,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 import MediaCard from '../../components/MediaCard';
 import { useAuth0 } from 'react-native-auth0';
 

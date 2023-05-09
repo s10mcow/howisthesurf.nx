@@ -21,7 +21,12 @@
     "@react-navigation/native": "*",
     "react-native-screens": "*",
     "react-native-safe-area-context": "*",
-    "@react-navigation/bottom-tabs": "*"
+    "@react-navigation/bottom-tabs": "*",
+    "expo-media-library": "*",
+    "expo-image-picker": "*",
+    "expo-camera": "*",
+    "@expo/vector-icons": "*",
+    "@react-navigation/native-stack": "*"
   },
   "scripts": {
     "postinstall": "rm -r node_modules && cd ../../ && yarn install && npx nx sync-deps howis-expo && npx nx ensure-symlink howis-expo",

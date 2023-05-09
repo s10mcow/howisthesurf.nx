@@ -1,54 +1,9 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { Auth0Provider, useAuth0 } from 'react-native-auth0';
-import Home from '../modules/Home/Home';
-import Landing from '../modules/Landing/Landing';
-import Navigation from '../modules/Navigation/Navigation';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
-const Login = () => {
-  const { authorize, clearSession, user, error } = useAuth0();
-  const onLogin = async () => {
-    try {
-      await authorize(
-        { scope: 'openid profile email' },
-        { customScheme: 'auth0.com.howisthesurf' }
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const onLogout = async () => {
-    try {
-      await clearSession({ customScheme: 'auth0.com.howisthesurf' });
-    } catch (e) {
-      console.log('Log out cancelled');
-    }
-  };
-
-  const loggedIn = user !== undefined && user !== null;
-
-  return (
-    <View style={styles.container}>
-      {loggedIn && <Text>You are logged in as {user.name}</Text>}
-      {!loggedIn && <Text>You are not logged in</Text>}
-      {error && <Text>{error.message}</Text>}
-
-      <Button
-        onPress={loggedIn ? onLogout : onLogin}
-        title={loggedIn ? 'Log Out' : 'Log In'}
-      />
-    </View>
-  );
-};
+import { Auth0Provider } from 'react-native-auth0';
+import Navigation from '../pages/Navigation/Navigation';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '../data';
+import { NavigationContainer } from '@react-navigation/native';
 
 export const App = () => {
   return (
@@ -56,7 +11,11 @@ export const App = () => {
       domain="dev-z23gbvtub72x2sj8.us.auth0.com"
       clientId="JyOLnYTPcyJfVzmNXVl8bRfq1TvBuv3s"
     >
-      <Navigation />
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
+      </QueryClientProvider>
     </Auth0Provider>
   );
 };

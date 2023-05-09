@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import config from './config';
-import { queryClient } from '../app/App';
 import faunadb from 'faunadb';
+import { QueryClient } from '@tanstack/react-query';
+export const queryClient = new QueryClient();
 
 const q = faunadb.query;
 const client = new faunadb.Client({
