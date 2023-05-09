@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { Auth0Provider, useAuth0 } from 'react-native-auth0';
-import Home from '../modules/Home/Home';
-import Landing from '../modules/Landing/Landing';
-import Navigation from '../modules/Navigation/Navigation';
+import { useAuth0 } from 'react-native-auth0';
+import Home from '../Home/Home';
+import Landing from '../Landing/Landing';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,15 +49,10 @@ const Login = () => {
   );
 };
 
-export const App = () => {
-  return (
-    <Auth0Provider
-      domain="dev-z23gbvtub72x2sj8.us.auth0.com"
-      clientId="JyOLnYTPcyJfVzmNXVl8bRfq1TvBuv3s"
-    >
-      <Navigation />
-    </Auth0Provider>
-  );
+export const Navigation = () => {
+  const { user } = useAuth0();
+
+  return user ? <Home /> : <Landing />;
 };
 
-export default App;
+export default Navigation;

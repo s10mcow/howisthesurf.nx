@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
 import { useAtom } from 'jotai';
 import { beachTypes, currentLocationAtom } from '../atoms/beaches';
 import { camerasAtom } from '../atoms/cameras';
 import { Picker } from '@react-native-picker/picker';
 // import { useNavigation } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 interface Beach {
   url: string;
@@ -24,6 +25,7 @@ const Player: React.FC<PlayerProps> = ({ url, name, index, beachNames }) => {
   const [showError, setShowError] = useState(false);
   const videoRef = useRef<Video>(null);
   // const navigation = useNavigation();
+  const [fullscreen, setFullscreen] = useState(false);
 
   const [_, setCameras] = useAtom(camerasAtom);
   const [currentLocation, setLocation] =
@@ -35,7 +37,25 @@ const Player: React.FC<PlayerProps> = ({ url, name, index, beachNames }) => {
       return { ...prev, [currentLocation]: currentCams };
     });
   };
+  useEffect(() => {
+    const subscription = ScreenOrientation.addOrientationChangeListener(
+      ({ orientationInfo }) => {
+        const { orientation } = orientationInfo;
+        if (
+          orientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+          orientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT
+        ) {
+          setFullscreen(true);
+        } else {
+          setFullscreen(false);
+        }
+      }
+    );
 
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
+  }, []);
   const updateCamera = ({
     index,
     url,
@@ -86,6 +106,7 @@ const Player: React.FC<PlayerProps> = ({ url, name, index, beachNames }) => {
       </Picker>
     </View>
   );
+  const videoStyle = fullscreen ? styles.fullscreenVideo : styles.video;
 
   const PlayerContent = () =>
     showError ? (
@@ -97,13 +118,11 @@ const Player: React.FC<PlayerProps> = ({ url, name, index, beachNames }) => {
         <Video
           ref={videoRef}
           source={{ uri: url }}
-          rate={1.0}
-          volume={1.0}
-          isMuted={false}
+          useNativeControls
           resizeMode="cover"
           shouldPlay
           isLooping
-          style={{ width: '100%', height: 300 }}
+          style={videoStyle}
         />
       </View>
     );
@@ -124,6 +143,15 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     marginBottom: 16,
+  },
+  video: {
+    width: '100%',
+    height: 500,
+  },
+  fullscreenVideo: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    position: 'absolute',
   },
 });
 

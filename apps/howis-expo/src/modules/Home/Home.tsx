@@ -5,9 +5,9 @@ import {
   beachTypes,
   currentLocationAtom,
   getCurrentBeachesAtom,
-} from '../atoms/beaches';
-import { camerasAtom } from '../atoms/cameras';
-import Player from '../components/Player';
+} from '../../atoms/beaches';
+import { camerasAtom } from '../../atoms/cameras';
+import Player from '../../components/Player';
 import {
   AddButton,
   AddButtonText,
@@ -18,7 +18,7 @@ import {
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createDrawerNavigator } from '@react-navigation/drawer';
-import { showModalAtom } from '../atoms/user';
+import { showModalAtom } from '../../atoms/user';
 
 function Home() {
   const [cameras, setCameras] = useAtom(camerasAtom);
@@ -61,7 +61,7 @@ function Home() {
   );
   useEffect(() => {
     if (!isModalShown) {
-      setShowModal(cameras?.[currentLocation].length === 2);
+      setShowModal(cameras?.[currentLocation].length > 0);
     }
   }, [cameras, currentLocation, isModalShown, setShownModal]);
 
