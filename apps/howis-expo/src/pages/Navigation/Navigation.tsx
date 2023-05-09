@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -19,24 +19,20 @@ const Stack = createNativeStackNavigator();
 
 const PostStack = () => {
   const navigation = useNavigation();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Select">
       <Stack.Screen
         options={{
+          headerTitle: 'New Post',
           headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ paddingHorizontal: 20 }}
-            >
-              <Ionicons name="close" size={24} color="black" />
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialIcons name="close" size={24} color="black" />
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Confirm')}
-              style={{ paddingHorizontal: 20 }}
-            >
-              <Ionicons name="arrow-forward" size={24} color="black" />
+            <TouchableOpacity onPress={() => navigation.navigate('Post')}>
+              <MaterialIcons name="arrow-forward" size={24} color="#2979FF" />
             </TouchableOpacity>
           ),
         }}
@@ -45,24 +41,14 @@ const PostStack = () => {
       />
       <Stack.Screen
         options={{
+          headerTitle: 'New Post',
           headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ paddingHorizontal: 20 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Confirm')}
-              style={{ paddingHorizontal: 20 }}
-            >
-              <Ionicons name="arrow-forward" size={24} color="black" />
+            <TouchableOpacity onPress={() => navigation.navigate('Select')}>
+              <MaterialIcons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>
           ),
         }}
-        name="Confirm"
+        name="Post"
         component={Confirm}
       />
       <Stack.Screen
@@ -98,10 +84,6 @@ export const Navigation = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      }}
     >
       <Tab.Screen
         options={{ headerShown: false }}

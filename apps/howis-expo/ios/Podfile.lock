@@ -403,7 +403,7 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.9.0):
+  - RNSVG (13.4.0):
     - React-Core
   - SimpleKeychain (1.0.1)
   - Yoga (1.14.0)
@@ -637,7 +637,7 @@ SPEC CHECKSUMS:
   ReactCommon: dbfbe2f7f3c5ce4ce44f43f2fd0d5950d1eb67c5
   RNCPicker: 0bf8ef8f7800524f32d2bb2a8bcadd53eda0ecd1
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
+  RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   SimpleKeychain: 130211269f88f038d7dc5254cf0b1b9ce978c398
   Yoga: d56980c8914db0b51692f55533409e844b66133c
 

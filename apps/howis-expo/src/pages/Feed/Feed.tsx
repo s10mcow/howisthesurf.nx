@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
   ActivityIndicator,
-  StyleSheet,
-  ScrollView,
   SafeAreaView,
-  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import MediaCard from '../../components/MediaCard';
-import { useAuth0 } from 'react-native-auth0';
 
-import { useAllMedia, useCreateMedia } from '../../data';
-
-import * as ImagePicker from 'expo-image-picker';
+import { useAllMedia } from '../../data';
 
 const styles = StyleSheet.create({
   feedbackContainer: {
@@ -32,38 +26,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Feed = ({ toggle }) => {
-  const [image, setImage] = useState('');
-  const { authorize, clearSession, user, error } = useAuth0();
-
+const Feed = () => {
   const { data: media, isLoading: isFetchingMedia } = useAllMedia();
-  const { mutate: createMedia, isLoading: isLoadingMedia } = useCreateMedia();
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
-      }
-    })();
-  }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      createMedia({ file: result.uri, tags: '', user });
-    }
-  };
 
   return (
     <SafeAreaView style={styles.feedbackContainer}>
@@ -71,13 +35,15 @@ const Feed = ({ toggle }) => {
         <ActivityIndicator />
       ) : (
         <ScrollView contentContainerStyle={styles.mediaList}>
-          {media?.map(({ data }) =>
-            data.resource_type === 'image' ? (
-              <MediaCard key={data.public_id} data={data} />
-            ) : (
-              <Text key={data.public_id}>I'm a video</Text>
-            )
-          )}
+          {media
+            ?.reverse()
+            ?.map(({ data }) =>
+              data.resource_type === 'image' ? (
+                <MediaCard key={data.public_id} data={data} />
+              ) : (
+                <Text key={data.public_id}>I'm a video</Text>
+              )
+            )}
         </ScrollView>
       )}
     </SafeAreaView>

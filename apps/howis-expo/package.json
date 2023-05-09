@@ -26,7 +26,18 @@
     "expo-image-picker": "*",
     "expo-camera": "*",
     "@expo/vector-icons": "*",
-    "@react-navigation/native-stack": "*"
+    "@react-navigation/native-stack": "*",
+    "expo-screen-orientation": "*",
+    "@tanstack/react-query": "*",
+    "jotai": "*",
+    "date-fns": "*",
+    "react-native-paper": "*",
+    "@auth0/nextjs-auth0": "*",
+    "next": "*",
+    "react-native-elements": "*",
+    "@cloudinary/url-gen": "*",
+    "faunadb": "*",
+    "styled-components": "*"
   },
   "scripts": {
     "postinstall": "rm -r node_modules && cd ../../ && yarn install && npx nx sync-deps howis-expo && npx nx ensure-symlink howis-expo",

@@ -30,7 +30,7 @@ const getAllMedia = async () => {
         body: JSON.stringify(error),
       };
     });
-  console.log('allMedia', allMedia);
+
   return allMedia;
 };
 
@@ -66,6 +66,9 @@ export const useCreateMedia = () => {
 
       const cloudinaryData = await fetch(url, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
         body: data,
       }).then((res) => res.json());
 
@@ -83,10 +86,8 @@ export const useCreateMedia = () => {
         },
       };
 
-      return fetch('/api/createMedia', {
-        method: 'POST',
-        body: JSON.stringify(media),
-      }).then((res) => res.json());
+      await client.query(q.Create(q.Collection('media'), { data: media }));
+      return;
     },
   });
 };

@@ -16,6 +16,7 @@ export default function Select() {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useAtom(selectedImageAtom);
   const navigator = useNavigation();
+
   useEffect(() => {
     (async () => {
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -37,14 +38,16 @@ export default function Select() {
         style={styles.imageContainer}
         onPress={() => setSelectedImage(item)}
       >
-        <Image source={{ uri: item.uri }} style={styles.image} />
+        {item?.uri && (
+          <Image source={{ uri: item?.uri }} style={styles.image} />
+        )}
       </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
-      {selectedImage && (
+      {selectedImage?.uri && (
         <Image
           source={{ uri: selectedImage.uri }}
           style={styles.selectedImage}
@@ -73,9 +76,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   selectedImage: {
-    width: '100%',
     height: 300,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     marginBottom: 10,
   },
   row: {

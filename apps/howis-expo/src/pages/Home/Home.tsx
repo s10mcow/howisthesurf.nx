@@ -1,6 +1,14 @@
 import { useAtom } from 'jotai';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, TouchableOpacity } from 'react-native';
+import {
+  FlatList,
+  Text,
+  Button,
+  Modal,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {
   beachTypes,
   currentLocationAtom,
@@ -8,13 +16,7 @@ import {
 } from '../../atoms/beaches';
 import { camerasAtom } from '../../atoms/cameras';
 import Player from '../../components/Player';
-import {
-  AddButton,
-  AddButtonText,
-  Container,
-  Modal,
-  Players,
-} from './HomeStyles';
+import { Container, Players } from './HomeStyles';
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -42,13 +44,6 @@ function Home() {
     setShowModal(false);
   };
 
-  const addNewCamera = () => {
-    // navigation.navigate('Feed');
-    // setCameras((prev) => {
-    //   const current = [...prev[currentLocation], beaches[0]];
-    //   return { ...prev, [currentLocation]: current };
-    // });
-  };
   const renderItem = ({ item, index }) => (
     <Player
       key={index}
@@ -67,20 +62,23 @@ function Home() {
 
   return (
     <Container>
-      {showModal && (
-        <Modal>
-          <Text>
-            We all hate ads. Thats why we're here. If you like what you see. Buy
-            me a beer...
-          </Text>
-          <TouchableOpacity onPress={handleClose}>
-            <Text>No thanks.</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={buyBeer}>
-            <Text>Hell yeah!</Text>
-          </TouchableOpacity>
-        </Modal>
-      )}
+      <Modal animationType="fade" transparent={true} visible={showModal}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Support?</Text>
+            <Text style={styles.modalText}>We all hate ads.</Text>
+            <Text style={styles.modalText}>
+              Thats why we're here. If you like what you see.
+            </Text>
+            <Text style={styles.modalText}>Buy me a beer...</Text>
+            <Button onPress={handleClose} title="No thanks." />
+
+            <TouchableOpacity style={styles.closeButton} onPress={buyBeer}>
+              <Text style={styles.closeButtonText}>🍺 Hell yeah! 🍺</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       <Players>
         <FlatList
@@ -95,3 +93,50 @@ function Home() {
 }
 
 export default Home;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  openButton: {
+    backgroundColor: '#2196F3',
+    borderRadius: 5,
+    padding: 10,
+  },
+  openButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 20,
+    width: '80%',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalText: {
+    textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  closeButton: {
+    backgroundColor: '#2196F3',
+    borderRadius: 5,
+    padding: 10,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
